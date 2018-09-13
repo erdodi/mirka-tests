@@ -1,8 +1,7 @@
 package entities;
 
 public enum RegistrationStatus {
-
-    REGISTERED,
-    ACTIVATED,
-    DEACTIVATED
+  REGISTERED,
+  ACTIVATED,
+  DEACTIVATED
 }

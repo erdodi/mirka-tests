@@ -1,3 +1,50 @@
-version '1.0.0-SNAPSHOT'
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:1.9.19")
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:3.1.0"
+    }
+}
 
-apply plugin: 'java'
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'com.diffplug.gradle.spotless'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+
+    ext {
+        serenityVersion = '1.9.19'
+        cucumberVersion = '1.9.7'
+    }
+
+    dependencies {
+        compile 'org.slf4j:slf4j-simple:1.7.25'
+        testCompile 'junit:junit:4.12'
+        testCompile("org.assertj:assertj-core:3.10.0")
+    }
+
+    spotless {
+        java {
+            removeUnusedImports()
+            trimTrailingWhitespace()
+            googleJavaFormat('1.5')
+        }
+    }
+
+    compileJava.dependsOn { spotlessApply }
+
+    clean {
+        delete "out"
+    }
+}
