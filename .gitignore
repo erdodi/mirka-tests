@@ -24,3 +24,13 @@ hs_err_pid*
 
 # Idea folder
 .idea/
+.gradle/
+build/
+target/
+log/
+out/
+generated/
+*.log
+*.iml
+*.html
+
