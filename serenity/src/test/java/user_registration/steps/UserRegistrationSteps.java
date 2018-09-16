@@ -1,7 +1,9 @@
 package user_registration.steps;
 
+import static common.UiProperties.BROWSER;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import common.UiProperties;
 import entities.RegistrationStatus;
 import entities.User;
 import net.thucydides.core.annotations.Step;
@@ -12,6 +14,8 @@ public class UserRegistrationSteps {
 
   @Step("A new user can be registered with email {0}")
   public void a_user_can_be_registered(String email, String password) {
+    BROWSER.get(UiProperties.URL);
+
     user = User.registerUser(email, password);
     assertThat(user).isNotNull();
     assertThat(user.getEmail()).isEqualTo(email);

@@ -32,7 +32,7 @@ public class UiProperties {
 
     // TODO Customize
     USER = Actor.named("Mirka");
-    URL = "";
+    URL = "http://empirica-stream.vyv.local:9090/core/";
 
     USERS = new HashMap<>();
     USERS.put(UserRole.ADMIN_USER, Tuple.of("admin", "admin1234"));
