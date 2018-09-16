@@ -1,4 +1,4 @@
-@gui @issue:VOUCHER-275
+@gui
 Feature: GUI - Login mechanism
 
   As a OEBB user

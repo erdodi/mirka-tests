@@ -1,4 +1,4 @@
-@test @gui
+@test
 Feature: Basic user registration flow
   As a potential user
   I want to be able to register
