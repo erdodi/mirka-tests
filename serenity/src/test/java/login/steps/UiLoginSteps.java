@@ -26,7 +26,7 @@ public class UiLoginSteps {
   public void openLoginPage(Actor actor) {
     actor.attemptsTo(Open.url(UiCommonUtils.getDefaultUrl()));
     UiCommonUtils.waitForLoginPage();
-    assertThat(Text.of(LoginPage.LOGIN_PAGE_TITLE).viewedBy(actor).asString())
+    assertThat(Text.of(LoginPage.LOGIN_PAGE_TITLE).answeredBy(actor))
         .describedAs("Title is not correct")
         .isEqualTo("Login page");
   }
@@ -40,7 +40,7 @@ public class UiLoginSteps {
 
   @Step
   public void userCanSeeErrorOnLoginPage(Actor actor) {
-    assertThat(Text.of(PaneContent.POP_UP_MESSAGE).viewedBy(actor).asString())
+    assertThat(Text.of(PaneContent.POP_UP_MESSAGE).answeredBy(actor))
         .describedAs("Title is not correct")
         .isEqualTo("Error message...");
   }
@@ -59,7 +59,7 @@ public class UiLoginSteps {
   @Step
   public void userClickLogInButtonAndCheckErrorMessage(final Actor actor) {
     actor.attemptsTo(Click.on(LoginPage.USER_LOGIN_BUTTON));
-    assertThat(Text.of(PaneContent.POP_UP_MESSAGE).viewedBy(actor).asString())
+    assertThat(Text.of(PaneContent.POP_UP_MESSAGE).answeredBy(actor))
         .describedAs("Title is not correct")
         .isEqualTo("Error message...");
   }

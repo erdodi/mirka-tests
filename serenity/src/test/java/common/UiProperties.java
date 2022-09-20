@@ -7,13 +7,17 @@ import java.util.Map;
 import net.serenitybdd.screenplay.Actor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class UiProperties {
 
-  private static UiProperties ourInstance = new UiProperties();
+  private static UiProperties ourInstance;
 
-  public static UiProperties getInstance() {
-    return ourInstance;
+  public static void init() {
+
+    if (ourInstance == null) {
+      ourInstance = new UiProperties();
+    }
   }
 
   public static WebDriver BROWSER;
@@ -27,12 +31,19 @@ public class UiProperties {
   public static Map<UserRole, Tuple2<String, String>> USERS;
 
   private UiProperties() {
-    BROWSER = new ChromeDriver();
+    System.setProperty(
+        "webdriver.chrome.driver", "src/test/resources/chromedriver_105.0.5195.52.exe");
+    BROWSER =
+        new ChromeDriver(
+            new ChromeOptions()
+                .setBinary(
+                    "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe"));
+
     LANGUAGE_VERSION = Language.ENGLISH;
 
     // TODO Customize
     USER = Actor.named("Mirka");
-    URL = "http://empirica-stream.vyv.local:9090/core/";
+    URL = "https://www.centrum.sk/";
 
     USERS = new HashMap<>();
     USERS.put(UserRole.ADMIN_USER, Tuple.of("admin", "admin1234"));

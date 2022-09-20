@@ -10,3 +10,4 @@ Feature: Basic user registration flow
     Then A new user has REGISTERED status
     When A user can be activated
     Then A user can log in
+    Then Close the browser

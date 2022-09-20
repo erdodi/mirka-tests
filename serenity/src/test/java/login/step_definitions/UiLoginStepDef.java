@@ -2,13 +2,12 @@ package login.step_definitions;
 
 import common.UiProperties;
 import common.UserRole;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import login.steps.UiLoginSteps;
 import net.thucydides.core.annotations.Steps;
 
-/** Created by miroslav.darula on 10. 10. 2016. */
 public class UiLoginStepDef {
 
   @Steps private UiLoginSteps uiLoginSteps;

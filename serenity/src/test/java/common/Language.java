@@ -1,6 +1,6 @@
 package common;
 
-/** Created by milos.lukac on 12/1/2016. */
+@SuppressWarnings("unused")
 public enum Language {
   ENGLISH("English"),
   DEUTSCH("Deutsch");

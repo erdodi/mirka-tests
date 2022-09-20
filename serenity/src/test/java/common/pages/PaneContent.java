@@ -4,7 +4,7 @@ import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.screenplay.targets.Target;
 import org.openqa.selenium.By;
 
-/** Created by milos.lukac on 12/9/2016. */
+@SuppressWarnings("unused")
 public class PaneContent extends PageObject {
 
   public static Target POP_UP_TITLE =

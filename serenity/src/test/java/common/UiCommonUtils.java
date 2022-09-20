@@ -2,16 +2,12 @@ package common;
 
 import com.google.common.base.Function;
 import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.Actor;
@@ -24,6 +20,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+@SuppressWarnings("unused")
 public class UiCommonUtils {
   private static final String[] FORMAT_STRINGS = {
     "M/d/yyyy, h:mm a",
@@ -188,10 +185,9 @@ public class UiCommonUtils {
     try {
       for (Field field : fields) {
         field.setAccessible(true);
-        if (!(field.get(targetObject) instanceof Target)) {
+        if (!(field.get(targetObject) instanceof Target target)) {
           continue;
         }
-        Target target = (Target) field.get(targetObject);
         if (target.getName().contains("LABEL") && target.resolveFor(actor).isCurrentlyVisible()) {
           list.add(target);
         }
@@ -261,8 +257,8 @@ public class UiCommonUtils {
 
   public static void waitForLoginPage() {
     WebDriver driver = UiProperties.BROWSER;
-    driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-    WebDriverWait wait = new WebDriverWait(driver, 30);
+    driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     wait.until(
         ExpectedConditions.not(
             ExpectedConditions.textToBe(By.className("qa_login_page_title"), "")));
@@ -270,7 +266,7 @@ public class UiCommonUtils {
 
   public static void waitPageIsCompleted(Actor actor, Target target) {
     WebDriver driver = UiProperties.BROWSER;
-    WebDriverWait webDriverWait = new WebDriverWait(driver, 15);
+    WebDriverWait webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(15));
     webDriverWait.until(
         (Function<WebDriver, Boolean>)
             input ->
@@ -283,14 +279,14 @@ public class UiCommonUtils {
   public static void waitForElement(Target target, Actor actor) {
     WebDriver driver = UiProperties.BROWSER;
     WebElementFacade element = target.resolveFor(actor);
-    WebDriverWait wait = new WebDriverWait(driver, 30);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     wait.until(ExpectedConditions.visibilityOf(element));
   }
 
   public static void waitUntilTitleIsNotEmpty(Target target, Actor actor) {
     WebDriver driver = UiProperties.BROWSER;
     //    WebElementFacade element = target.resolveFor(actor);
-    WebDriverWait wait = new WebDriverWait(driver, 30);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     //
     // wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementValue(element,
     // "")));
@@ -300,13 +296,13 @@ public class UiCommonUtils {
 
   public static void waitUntilElementDisappears(By locator) {
     WebDriver driver = UiProperties.BROWSER;
-    WebDriverWait wait = new WebDriverWait(driver, 120);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
     wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
   }
 
   public static void waitForData() {
     WebDriver driver = UiProperties.BROWSER;
-    WebDriverWait wait = new WebDriverWait(driver, 60);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
     try {
       wait.until(
@@ -342,35 +338,26 @@ public class UiCommonUtils {
   public static String formatDateToDisplayedValue(
       Target displayedValueAsPattern, ZonedDateTime date) {
     Actor actor = UiProperties.USER;
-    String displayedText = Text.of(displayedValueAsPattern).viewedBy(actor).asString();
+    String displayedText = Text.of(displayedValueAsPattern).answeredBy(actor);
     String pattern = getPattern(displayedText);
 
-    switch (UiProperties.LANGUAGE_VERSION.toString()) {
-      case "English":
-        return date.withZoneSameInstant(ZoneId.systemDefault())
-            .format(DateTimeFormatter.ofPattern(pattern).withLocale(Locale.ENGLISH));
-      case "Deutsch":
-        return date.withZoneSameInstant(ZoneId.systemDefault())
-            .format(DateTimeFormatter.ofPattern(pattern).withLocale(Locale.GERMANY));
-      default:
-        return "Not supported language";
-    }
+    return switch (UiProperties.LANGUAGE_VERSION.toString()) {
+      case "English" -> date.withZoneSameInstant(ZoneId.systemDefault())
+          .format(DateTimeFormatter.ofPattern(pattern).withLocale(Locale.ENGLISH));
+      case "Deutsch" -> date.withZoneSameInstant(ZoneId.systemDefault())
+          .format(DateTimeFormatter.ofPattern(pattern).withLocale(Locale.GERMANY));
+      default -> "Not supported language";
+    };
   }
 
   public static String getPattern(String dateAsPattern) {
-    Locale locale;
+    final Locale locale =
+        switch (UiProperties.LANGUAGE_VERSION.toString()) {
+          case "English" -> Locale.ENGLISH;
+          case "Deutsch" -> Locale.GERMANY;
+          default -> throw new IllegalArgumentException();
+        };
     //    dateAsPattern = removeUnnecessaryZerosFromDate(dateAsPattern);
-
-    switch (UiProperties.LANGUAGE_VERSION.toString()) {
-      case "English":
-        locale = Locale.ENGLISH;
-        break;
-      case "Deutsch":
-        locale = Locale.GERMANY;
-        break;
-      default:
-        throw new IllegalArgumentException();
-    }
 
     for (String parse : FORMAT_STRINGS) {
       try {
@@ -430,14 +417,13 @@ public class UiCommonUtils {
   }
 
   public static String formatDateToDisplayedValueInCalendarInputField(ZonedDateTime date) {
-    switch (UiProperties.LANGUAGE_VERSION.toString()) {
-      case "English":
-        return date.format(DateTimeFormatter.ofPattern("MMMM d, yyyy").withLocale(Locale.ENGLISH));
-      case "Deutsch":
-        return date.format(DateTimeFormatter.ofPattern("d. MMMM yyyy").withLocale(Locale.GERMANY));
-      default:
-        return "Not supported language";
-    }
+    return switch (UiProperties.LANGUAGE_VERSION.toString()) {
+      case "English" -> date.format(
+          DateTimeFormatter.ofPattern("MMMM d, yyyy").withLocale(Locale.ENGLISH));
+      case "Deutsch" -> date.format(
+          DateTimeFormatter.ofPattern("d. MMMM yyyy").withLocale(Locale.GERMANY));
+      default -> "Not supported language";
+    };
 
     //    int day = date.getDayOfMonth();
     //    Month month = date.getMonth();
@@ -486,22 +472,19 @@ public class UiCommonUtils {
   }
 
   private static String prepareValueForCalendar(int day, String month, int year) {
-    switch (UiProperties.LANGUAGE_VERSION.toString()) {
-      case "English":
-        return month
-            .concat(" ")
-            .concat(String.valueOf(day))
-            .concat(", ")
-            .concat(String.valueOf(year));
-      case "Deutsch":
-        return String.valueOf(day)
-            .concat(". ")
-            .concat(month)
-            .concat(" ")
-            .concat(String.valueOf(year));
-      default:
-        return "Not supported language";
-    }
+    return switch (UiProperties.LANGUAGE_VERSION.toString()) {
+      case "English" -> month
+          .concat(" ")
+          .concat(String.valueOf(day))
+          .concat(", ")
+          .concat(String.valueOf(year));
+      case "Deutsch" -> String.valueOf(day)
+          .concat(". ")
+          .concat(month)
+          .concat(" ")
+          .concat(String.valueOf(year));
+      default -> "Not supported language";
+    };
   }
 
   public static LocalDate createDateFromString(String date) {
@@ -510,14 +493,14 @@ public class UiCommonUtils {
   }
 
   public static String getDefaultUrl() {
-    if (Boolean.valueOf(System.getProperty("localhost"))) {
+    if (Boolean.parseBoolean(System.getProperty("localhost"))) {
       return "http://localhost:4200";
     }
     return UiProperties.URL;
   }
 
   public static String generateBsBuildName() {
-    return LocalDateTime.now().format(DateTimeFormatter.ofPattern("d.M.yyyy HH:mm:SS"));
+    return LocalDateTime.now().format(DateTimeFormatter.ofPattern("d.M.yyyy HH:mm:ss"));
   }
 
   public String getRandomString() {
