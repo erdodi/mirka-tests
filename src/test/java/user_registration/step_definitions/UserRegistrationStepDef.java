@@ -38,6 +38,6 @@ public class UserRegistrationStepDef {
 
   @Then("^Close the browser$")
   public void thenCloseBrowserAndEndTest() {
-    BROWSER.close();
+    BROWSER.quit();
   }
 }

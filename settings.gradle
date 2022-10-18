@@ -1,3 +1,1 @@
 rootProject.name = 'mirka-tests'
-include 'serenity'
-

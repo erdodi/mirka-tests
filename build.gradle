@@ -1,50 +1,55 @@
 buildscript {
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        jcenter()
-    }
-
     ext {
         serenityVersion = '3.3.4'
     }
 
     dependencies {
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:6.11.0"
-    }
-}
-
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'idea'
-    apply plugin: 'com.diffplug.spotless'
-
-    sourceCompatibility = 18
-
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        jcenter()
-    }
-
-    dependencies {
-        implementation 'org.slf4j:slf4j-simple:2.0.1'
-        implementation 'io.vavr:vavr:0.10.4'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
-        testImplementation("org.assertj:assertj-core:3.23.1")
-    }
-
-    spotless {
-        java {
-            removeUnusedImports()
-            trimTrailingWhitespace()
-            googleJavaFormat('1.15.0')
+        classpath('com.diffplug.spotless:spotless-plugin-gradle:6.11.0') {
+            exclude group: 'org.codehaus.groovy', module: 'groovy'
         }
     }
+}
 
-    compileJava.dependsOn { spotlessApply }
+plugins {
+    id "idea"
+    id "java"
+    id "net.serenity-bdd.serenity-gradle-plugin" version "3.3.4"
+}
 
-    clean {
-        delete "out"
+repositories {
+    mavenCentral()
+    mavenLocal()
+    jcenter()
+}
+
+apply plugin: 'com.diffplug.spotless'
+
+dependencies {
+    implementation 'org.slf4j:slf4j-simple:2.0.3'
+    implementation 'io.vavr:vavr:0.10.4'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testImplementation("org.assertj:assertj-core:3.23.1")
+    testImplementation("net.serenity-bdd:serenity-core:$serenityVersion")
+    testImplementation("net.serenity-bdd:serenity-junit:$serenityVersion")
+    testImplementation("net.serenity-bdd:serenity-cucumber:$serenityVersion")
+}
+
+spotless {
+    java {
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        googleJavaFormat('1.15.0')
     }
 }
+
+compileJava.dependsOn { spotlessApply }
+
+clean {
+    delete "out"
+}
+
+//serenity {
+//    requirementsBaseDir = "fuuuck"
+//    testRoot = "buildddd"
+//}
