@@ -7,30 +7,49 @@ public class MathRoller {
 
   public static void main(String[] args) {
 
+    // TODO KE:
+    //  pridat dalsi vstupny parameter pre urcenie maximalneho suctu
     final Scanner in = new Scanner(System.in);
-    final Random rd = new Random(20);
+    // final Random rd = new Random(20);
 
     System.out.println("How many examples should I generate? ");
     int count;
     count = in.nextInt();
 
-    int randomNumber1;
-    randomNumber1 = rd.nextInt(20);
-
-    int randomNumber2;
-    randomNumber2 = (rd.nextInt(20)) - randomNumber1;
-
-    // System.out.println(count);
-    // System.out.println(randomNumber1);
-    // System.out.println(randomNumber2);
-    // System.out.println(randomNumber1 + " + " + randomNumber2 + " = ");
-
-    generujZoznam(count, randomNumber1, randomNumber2);
+    generujZoznamPrikladov(count);
   }
 
-  public static void generujZoznam(int count, int firstNumber, int secondNumber) {
+  public static void generujZoznamPrikladov(int count) {
+
+    final Random rd = new Random(20);
+    final String[] prikladyZiak = new String[count];
+    // pole kde ukladam string zoznam prikladov pre ziaka
+    // pole stringov s nazvom prikladyZiak dlzky count ktoru zadame na vstupe zo scaneru
+    final String[] prikladyUcitel = new String[count];
+    // pole kde ukladam zoznam prikladov pre ucitela cize je to pole prikladyZiak + vysledok
+
     for (int i = 0; i < count; i++) {
-      System.out.println((i + 1) + ". " + firstNumber + " + " + secondNumber + " = ");
+      int firstNumber = rd.nextInt(20);
+      int secondNumber = (rd.nextInt(20 - firstNumber));
+      int sucet = firstNumber + secondNumber;
+      prikladyZiak[i] = firstNumber + " + " + secondNumber + " = ?";
+      prikladyUcitel[i] = firstNumber + " + " + secondNumber + " = " + sucet;
+    }
+
+    // TODO KE:
+    //  prerobit s pouzitim List-u
+    //  BONUS: vypis nie pouzitim for-u, ale Java 8 forEach a lambdy :-)
+    //  NAPOVEDA: ziskaj zavolanim metody Napoveda.dajNapovedu()
+    System.out.println("\n" + "Príklady pre žiaka: ");
+    for (int j = 0; j < count; j++) {
+      int poradie = j + 1;
+      System.out.println("%s. %s ".formatted(poradie, prikladyZiak[j]));
+    }
+
+    System.out.println("\n" + "Príklady pre ucitela: ");
+    for (int k = 0; k < count; k++) {
+      int poradie = k + 1;
+      System.out.println("%s. %s ".formatted(poradie, prikladyUcitel[k]));
     }
   }
 }
