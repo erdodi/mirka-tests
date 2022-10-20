@@ -1,6 +1,6 @@
 package user.input.tutorial;
 
-public class tutorialRekurzia {
+public class TutorialRekurzia {
 
   public static void main(String[] args) {
     System.out.println(faktorialSlucka(6));

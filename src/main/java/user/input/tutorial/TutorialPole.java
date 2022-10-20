@@ -1,6 +1,6 @@
 package user.input.tutorial;
 
-public class tutorialPole {
+public class TutorialPole {
 
   public static void main(String[] args) {
     int[] cisla = new int[4];

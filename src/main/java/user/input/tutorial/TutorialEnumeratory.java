@@ -1,6 +1,6 @@
 package user.input.tutorial;
 
-public class tutorialEnumeratory {
+public class TutorialEnumeratory {
   enum Farby {
     CERVENA,
     ZELENA,

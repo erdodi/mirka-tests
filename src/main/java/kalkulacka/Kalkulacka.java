@@ -2,7 +2,7 @@ package kalkulacka;
 
 import java.util.Scanner;
 
-public class kalkulacka {
+public class Kalkulacka {
 
   static boolean ukoncit = false;
   static Scanner in = new Scanner(System.in);
