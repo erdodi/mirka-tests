@@ -40,7 +40,7 @@ public class MathRoller {
     //  prerobit s pouzitim List-u
     //  BONUS: vypis nie pouzitim for-u, ale Java 8 forEach a lambdy :-)
     //  NAPOVEDA: ziskaj zavolanim metody Napoveda.dajNapovedu()
-    System.out.println("\n" + "Príklady pre žiaka: ");
+    System.out.println("Príklady pre žiaka: ");
     for (int j = 0; j < count; j++) {
       int poradie = j + 1;
       System.out.println("%s. %s ".formatted(poradie, prikladyZiak[j]));
