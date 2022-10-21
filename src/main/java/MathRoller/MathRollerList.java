@@ -18,12 +18,12 @@ public class MathRollerList {
     int count;
     count = in.nextInt();
 
-    System.out.println("Enter the maximum amount: ");
+    System.out.println("Enter the maximum sum: ");
     int maxSum;
     maxSum = in.nextInt();
 
     generujZoznamPrikladov(count, maxSum);
-    Napoveda.dajNapovedu();
+
   }
 
   public static void generujZoznamPrikladov(int count, int maxSum) {
