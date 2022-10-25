@@ -1,6 +1,5 @@
 package MathRoller;
 
-import entities.Napoveda;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -9,21 +8,20 @@ public class MathRollerList {
 
   public static void main(String[] args) {
 
-    // TODO KE:
-    //  pridat dalsi vstupny parameter pre urcenie maximalneho suctu
     final Scanner in = new Scanner(System.in);
     // final Random rd = new Random(20);
+
+    System.out.println("Generator prikladov na scitanie a odcitanie do XXX");
+
+    System.out.println("Zadajte hodnotu XXX: ");
+    int maxSum;
+    maxSum = in.nextInt();
 
     System.out.println("How many examples should I generate? ");
     int count;
     count = in.nextInt();
 
-    System.out.println("Enter the maximum sum: ");
-    int maxSum;
-    maxSum = in.nextInt();
-
     generujZoznamPrikladov(count, maxSum);
-
   }
 
   public static void generujZoznamPrikladov(int count, int maxSum) {
@@ -36,21 +34,37 @@ public class MathRollerList {
     // objekt List kde ukladam zoznam prikladov pre ucitela cize je to pole prikladyZiak + vysledok
 
     for (int i = 0; i < count; i++) {
+      int znamienko = rd.nextInt(2);
       int firstNumber = rd.nextInt(maxSum + 1);
       int secondNumber = (rd.nextInt(maxSum + 1 - firstNumber));
-      int sucet = firstNumber + secondNumber;
-      prikladyZiak.add(i + 1 + ". " + firstNumber + " + " + secondNumber + " = ?");
-      prikladyUcitel.add(i + 1 + ". " + firstNumber + " + " + secondNumber + " = " + sucet);
+
+      if (znamienko == 0) {
+        int sucet = genZoznPriklScit(firstNumber, secondNumber);
+        prikladyZiak.add(i + 1 + ". " + firstNumber + " + " + secondNumber + " = ?");
+        prikladyUcitel.add(i + 1 + ". " + firstNumber + " + " + secondNumber + " = " + sucet);
+      } else {
+        if (firstNumber > secondNumber) {
+          int rozdiel = genZoznRozdiel(firstNumber, secondNumber);
+          prikladyZiak.add(i + 1 + ". " + firstNumber + " - " + secondNumber + " = ?");
+          prikladyUcitel.add(i + 1 + ". " + firstNumber + " - " + secondNumber + " = " + rozdiel);
+        }
+      }
     }
 
-    // TODO KE:
-    //  prerobit s pouzitim List-u
-    //  BONUS: vypis nie pouzitim for-u, ale Java 8 forEach a lambdy :-)
-    //  NAPOVEDA: ziskaj zavolanim metody Napoveda.dajNapovedu()
     System.out.println("Príklady pre žiaka: ");
     prikladyZiak.forEach(System.out::println);
 
     System.out.println("\n" + "Príklady pre ucitela: ");
     prikladyUcitel.forEach(System.out::println);
+  }
+
+  public static int genZoznPriklScit(int firstNumber, int secondNumber) {
+    int sucet = firstNumber + secondNumber;
+    return sucet;
+  }
+
+  public static int genZoznRozdiel(int firstNumber, int secondNumber) {
+    int rozdiel = firstNumber - secondNumber;
+    return rozdiel;
   }
 }
