@@ -37,15 +37,28 @@ public class MatPrikladClass {
 
     for (int i = 0; i < count; i++) {
 
-      int znamienko = rd.nextInt(2);
+      int znamienko1 = rd.nextInt(2);
+      int znamienko2 = rd.nextInt(2);
 
-      if (znamienko == 0) {
+      if (znamienko1 == 0 & znamienko2 == 0) {
         MatPrikladRecord priklad = genZoznPriklScit(i, maxSum);
         priklady.add(priklad);
+      }
 
-      } else {
-        MatPrikladRecord priklad = genZoznRozdiel(i, maxSum);
+      if (znamienko1 == 0 & znamienko2 == 1) {
+        MatPrikladRecord priklad = genZoznPriklScitOdcit(i, maxSum);
         priklady.add(priklad);
+      }
+
+      if (znamienko1 == 1 & znamienko2 == 0) {
+        MatPrikladRecord priklad = genZoznPriklOdcitScit(i, maxSum);
+        priklady.add(priklad);
+      } else {
+
+        if (znamienko1 == 1 & znamienko2 == 1) {
+          MatPrikladRecord priklad = genZoznRozdiel(i, maxSum);
+          priklady.add(priklad);
+        }
       }
     }
     System.out.println("Priklady pre žiaka: ");
@@ -63,12 +76,32 @@ public class MatPrikladClass {
   public static MatPrikladRecord genZoznPriklScit(int index, int maxSum) {
     int firstNumber = nextInt(0, maxSum + 1);
     int secondNumber = nextInt(0, maxSum + 1 - firstNumber);
-    return new MatPrikladRecord(index + 1, Operation.PLUS, firstNumber, secondNumber);
+    int thirdNumber = nextInt(0, maxSum + 1 - firstNumber - secondNumber);
+    return new MatPrikladRecord(
+        index + 1, Operation.PLUS, Operation.PLUS, firstNumber, secondNumber, thirdNumber);
+  }
+
+  public static MatPrikladRecord genZoznPriklScitOdcit(int index, int maxSum) {
+    int firstNumber = nextInt(0, maxSum + 1);
+    int secondNumber = nextInt(0, maxSum + 1 - firstNumber);
+    int thirdNumber = nextInt(0, firstNumber + secondNumber + 1);
+    return new MatPrikladRecord(
+        index + 1, Operation.PLUS, Operation.MINUS, firstNumber, secondNumber, thirdNumber);
   }
 
   public static MatPrikladRecord genZoznRozdiel(int index, int maxSum) {
     int firstNumber = nextInt(0, maxSum + 1);
     int secondNumber = nextInt(0, firstNumber + 1);
-    return new MatPrikladRecord(index + 1, Operation.MINUS, firstNumber, secondNumber);
+    int thirdNumber = nextInt(0, firstNumber - secondNumber + 1);
+    return new MatPrikladRecord(
+        index + 1, Operation.MINUS, Operation.MINUS, firstNumber, secondNumber, thirdNumber);
+  }
+
+  public static MatPrikladRecord genZoznPriklOdcitScit(int index, int maxSum) {
+    int firstNumber = nextInt(0, maxSum + 1);
+    int secondNumber = nextInt(0, firstNumber + 1);
+    int thirdNumber = nextInt(0, maxSum + 1 - firstNumber + secondNumber);
+    return new MatPrikladRecord(
+        index + 1, Operation.MINUS, Operation.PLUS, firstNumber, secondNumber, thirdNumber);
   }
 }
