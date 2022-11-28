@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import common.UiProperties;
 import entities.RegistrationStatus;
 import entities.User;
+import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.actions.Open;
 import net.thucydides.core.annotations.Step;
 
 public class UserRegistrationSteps {
@@ -40,5 +42,10 @@ public class UserRegistrationSteps {
   public void a_user_can_log_in() {
     assertThat(user.getRegistrationStatus()).isEqualTo(RegistrationStatus.ACTIVATED);
     assertThat(true).isTrue();
+  }
+
+  @Step
+  public void openPage(Actor actor, String url) {
+    actor.attemptsTo(Open.url(url));
   }
 }
