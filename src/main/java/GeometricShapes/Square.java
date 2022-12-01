@@ -9,5 +9,15 @@ public record Square(String nameOfShape, int sideA, int content, int circumferen
 
   public String protocolSquare() {
     return "%s %s %s %s ".formatted(nameOfShape, sideA, content, circumference);
+
+    // return "Name od shape: %s \nLength of the side a: %s \nContent: %s \nCircumference: %s \n"
+    //    .formatted(nameOfShape, sideA, content, circumference);
+
+    // System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
+    // System.out.print("Name od shape: %s \nLength of the side a: %s \nContent: %s \nCircumference:
+    // %s \n"
+    //              .formatted(nameOfShape, sideA, content, circumference));
+    // System.out.println("************END OF PROTOCOL**********************");
+
   }
 }
