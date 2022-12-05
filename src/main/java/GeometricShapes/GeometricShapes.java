@@ -46,17 +46,15 @@ public class GeometricShapes {
     // System.out.println("************END OF PROTOCOL**********************");
   }
 
-  public static Square shapeSquare() {
+  public static void shapeSquare() {
     System.out.print("Enter length of the side a: ");
 
     int sideA = in.nextInt();
     String nameOfShape = "SQUARE";
     Square squareI = new Square(nameOfShape, sideA);
-    // inicializacia nove objektu record - square
-    System.out.println(squareI.protocolSquare(sideA));
+    // instancia noveho objektu square
+    System.out.println(squareI.protocolSquare());
     // System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
-
-    return new Square(nameOfShape, sideA);
   }
 
   public static Rectangle shapeRectangle() {

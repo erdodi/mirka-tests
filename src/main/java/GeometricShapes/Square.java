@@ -7,7 +7,7 @@ package GeometricShapes;
 
 public record Square(String nameOfShape, int sideA) {
 
-  public String protocolSquare(int sideA) {
+  public String protocolSquare() {
 
     int content = sideA * sideA;
     int circumference = 4 * sideA;
