@@ -5,19 +5,13 @@ package GeometricShapes;
 //        vypocitat, cize napr. plocha, objem, povrch, sucet hran, povrch stran,
 //        uhlopriecky a pod.
 
-public record Square(String nameOfShape, int sideA, int content, int circumference) {
+public record Square(String nameOfShape, int sideA) {
 
-  public String protocolSquare() {
-    return "%s %s %s %s ".formatted(nameOfShape, sideA, content, circumference);
+  public String protocolSquare(int sideA) {
 
-    // return "Name od shape: %s \nLength of the side a: %s \nContent: %s \nCircumference: %s \n"
-    //    .formatted(nameOfShape, sideA, content, circumference);
-
-    // System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
-    // System.out.print("Name od shape: %s \nLength of the side a: %s \nContent: %s \nCircumference:
-    // %s \n"
-    //              .formatted(nameOfShape, sideA, content, circumference));
-    // System.out.println("************END OF PROTOCOL**********************");
-
+    int content = sideA * sideA;
+    int circumference = 4 * sideA;
+    return "Name od shape: %s \nLength of the side a: %s \nContent(a*a): %s \nCircumference(4*a): %s \n"
+        .formatted(nameOfShape, sideA, content, circumference);
   }
 }

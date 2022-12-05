@@ -23,7 +23,7 @@ public class GeometricShapes {
   // }
 
   public static void showMenu() {
-    System.out.println(
+    System.out.print(
         "1) SQUARE\n2) RECTANGLE\n3) CIRCLE\n4) TRIANGLE\n\n0) Finish\n\nEnter your choice: ");
     switch (in.nextInt()) {
       case 1:
@@ -43,21 +43,20 @@ public class GeometricShapes {
         break;
         // zatial nemam osetrene ak pouzivatel zada ine cislo nez mam v zozname
     }
-    System.out.println("************END OF PROTOCOL**********************");
+    // System.out.println("************END OF PROTOCOL**********************");
   }
 
   public static Square shapeSquare() {
     System.out.print("Enter length of the side a: ");
+
     int sideA = in.nextInt();
     String nameOfShape = "SQUARE";
-    int content = sideA * sideA;
-    int circumference = 4 * sideA;
-    System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
-    System.out.print(
-        "Name od shape: %s \nLength of the side a: %s \nContent(a*a): %s \nCircumference(4*a): %s \n"
-            .formatted(nameOfShape, sideA, content, circumference));
-    // shapeSquare().protocolSquare();
-    return new Square(nameOfShape, sideA, content, circumference);
+    Square squareI = new Square(nameOfShape, sideA);
+    // inicializacia nove objektu record - square
+    System.out.println(squareI.protocolSquare(sideA));
+    // System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
+
+    return new Square(nameOfShape, sideA);
   }
 
   public static Rectangle shapeRectangle() {
@@ -66,27 +65,24 @@ public class GeometricShapes {
     System.out.print("Enter length of the side b: ");
     int sideB = in.nextInt();
     String nameOfShape = "RECTANGLE";
-    int content = sideA * sideB;
-    int circumference = 2 * (sideA + sideB);
-    System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
-    System.out.print(
-        "Name od shape: %s \nLength of the side a: %s \nLength of the side b: %s \nContent: %s \nCircumference: %s \n"
-            .formatted(nameOfShape, sideA, sideB, content, circumference));
-    return new Rectangle(nameOfShape, sideA, sideB, content, circumference);
+    Rectangle rectangleI = new Rectangle(nameOfShape, sideA, sideB);
+    // inicializacia nove objektu record - Rectangle
+    System.out.println(rectangleI.protocolRectangle(sideA, sideB));
+
+    return new Rectangle(nameOfShape, sideA, sideB);
   }
 
   public static Circle shapeCircle() {
     System.out.print("Enter radius r: ");
     int radiusR = in.nextInt();
     String nameOfShape = "CIRCLE";
-    double content = Math.PI * radiusR;
-    double circumference = 2 * Math.PI * radiusR;
-    System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
-    System.out.print(
-        "Name od shape: %s \nLength of radius r: %s \nContent: %02d \nCircumference: %02d \n"
-            .formatted(nameOfShape, radiusR, content, circumference));
-    // shapeSquare().protocolSquare();
-    return new Circle(nameOfShape, radiusR, content, circumference);
+    // System.out.println("********NICE PROTOCOL OF GEOMETRIC SHAPES********");
+
+    Circle CircleI = new Circle(nameOfShape, radiusR);
+    // inicializacia nove objektu record - Circle
+    System.out.println(CircleI.protocolCircle(radiusR));
+
+    return new Circle(nameOfShape, radiusR);
   }
 
   public static void shapeTriangle() {}
