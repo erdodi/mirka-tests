@@ -83,5 +83,18 @@ public class GeometricShapes {
     System.out.println(CircleI.protocolCircle());
   }
 
-  public static void shapeTriangle() {}
+  public static void shapeTriangle() {
+    System.out.print("Enter length of the side a: ");
+    int sideA = in.nextInt();
+    System.out.print("Enter length of the side b: ");
+    int sideB = in.nextInt();
+    System.out.print("Enter length of the side c: ");
+    int sideC = in.nextInt();
+    System.out.print("Enter length of high to the side a: ");
+    int highA = in.nextInt();
+    String nameOfShape = "Triangle";
+    // instancia noveho objektu Triangle
+    Triangle TriangleI = new Triangle(nameOfShape, sideA, sideB, sideC, highA);
+    System.out.println(TriangleI.protocolTriangle());
+  }
 }
